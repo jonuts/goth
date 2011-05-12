@@ -1,5 +1,13 @@
+lib = File.expand_path('..', __FILE__)
+$:.unshift lib unless $:.include?(lib)
+
+require 'oauth'
 require 'oauth/consumer'
 require 'oauth/signature/rsa/sha1'
+
+require 'goth/config'
+require 'goth/service'
+require 'goth/version'
 
 module Goth
   class << self
@@ -38,54 +46,6 @@ module Goth
 
     def services
       @services ||= Hash.new(false)
-    end
-  end
-
-  class Config
-    OPTS = [:consumer_key, :consumer_secret, :return_url] unless
-      self.const_defined?(:OPTS)
-
-    class << self
-      def [](c)
-        assert_valid_opt!(c)
-        opts[c]
-      end
-
-      def []=(c,v)
-        assert_valid_opt!(c)
-        opts[c] = v
-      end
-
-      def use
-        yield opts
-      end
-
-      private
-
-      def assert_valid_opt!(c)
-        raise ArgumentError, "`#{c}' is not a valid option" unless 
-          OPTS.member?(c)
-      end
-
-      def opts 
-        @__opts__ ||= Struct.new(*OPTS)
-      end
-    end
-  end
-
-  class Service
-    def initialize(name, scope)
-      @name, @scope = name, scope
-    end
-
-    attr_reader :scope
-
-    def get_request_token
-      consumer.get_request_token({:oauth_callback => Goth::Config[:return_url]}, {:scope => scope})
-    end
-
-    def consumer
-      Goth.consumer
     end
   end
 
