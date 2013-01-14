@@ -15,6 +15,6 @@ Gem::Specification.new do |s|
   s.require_path = "lib"
   s.homepage     = "https://www.github.com/jonuts/goth"
 
-  s.add_dependency("oauth", "~> 0.4.4")
+  s.add_dependency("oauth2", "~> 0.7.1")
 end
 

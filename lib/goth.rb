@@ -11,23 +11,17 @@ require 'goth/version'
 
 module Goth
   class << self
-    def consumer
-      @consumer ||= OAuth::Consumer.new(Config[:consumer_key], Config[:consumer_secret], {
-        :site               => 'https://www.google.com',
-        :request_token_path => '/accounts/OAuthGetRequestToken',
-        :access_token_path  => '/accounts/OAuthGetAccessToken',
-        :authorize_path     => '/accounts/OAuthAuthorizeToken',
-        :signature_method   => "HMAC-SHA1"
+    def client
+      @client ||= OAuth2::Client.new(Config[:client_id], Config[:client_secret], {
+        site: 'https://accounts.google.com',
+        authorize_url: '/o/oauth2/auth',
+        token_url: '/o/oauth2/token'
       })
     end
+    alias_method :consumer, :client
 
-    # Regenerate a request token from OAuth::RequestToke#token and OAuthRequestToken#secret
-    def generate_request_token(token, secret)
-      OAuth::RequestToken.new(consumer, token, secret)
-    end
-
-    def generate_access_token(token, secret)
-      OAuth::AccessToken.new(consumer, token, secret)
+    def generate_token(code, service)
+      services[service.to_sym].generate_token(code)
     end
 
     def registered_services
@@ -51,5 +45,6 @@ module Goth
 
   register_service :analytics, "https://www.google.com/analytics/feeds"
   register_service :webmasters, "https://www.google.com/webmasters/tools/feeds"
+  register_service :adwords, "https://adwords.google.com/api/adwords"
 end
 
