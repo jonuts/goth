@@ -28,8 +28,8 @@ module Goth
       services.keys
     end
 
-    def register_service(name, scope)
-      services[name] = Service.new(name, scope) unless services[name]
+    def register_service(name, scope, opts={})
+      services[name] = Service.new(name, scope, opts) unless services[name]
     end
 
     def [](name)
@@ -45,6 +45,6 @@ module Goth
 
   register_service :analytics, "https://www.google.com/analytics/feeds"
   register_service :webmasters, "https://www.google.com/webmasters/tools/feeds"
-  register_service :adwords, "https://adwords.google.com/api/adwords"
+  register_service :adwords, "https://adwords.google.com/api/adwords", {access_type: 'offline', approval_prompt: 'force'}
 end
 

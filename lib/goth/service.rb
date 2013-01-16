@@ -1,13 +1,13 @@
 module Goth
   class Service
-    def initialize(name, scope)
-      @name, @scope = name, scope
+    def initialize(name, scope, opts={})
+      @name, @scope, @opts = name, scope, opts
     end
 
     attr_reader :scope, :name
 
     def authorize_url
-      client.auth_code.authorize_url(redirect_uri: return_url, scope: scope)
+      client.auth_code.authorize_url({redirect_uri: return_url, scope: scope}.merge @opts)
     end
 
     def client
