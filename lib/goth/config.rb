@@ -1,6 +1,6 @@
 module Goth
   class Config
-    OPTS = [:client_id, :client_secret, :return_url] unless
+    OPTS = [:oauth_consumer_key, :oauth_consumer_secret, :oauth2_client_id, :oauth2_client_secret, :return_url] unless
       self.const_defined?(:OPTS)
 
     class << self
