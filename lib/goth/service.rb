@@ -4,7 +4,11 @@ module Goth
       @name, @scope, @opts = name, scope, opts
     end
 
-    attr_reader :scope, :name
+    attr_reader :scope, :name, :opts
+
+    def oauth
+      opts[:oauth]
+    end
 
     def authorize_url
       client.auth_code.authorize_url({redirect_uri: return_url, scope: scope}.merge @opts)
