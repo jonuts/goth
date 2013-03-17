@@ -1,4 +1,4 @@
 module Goth
-  VERSION = "0.2.1" unless defined?(::Goth::VERSION)
+  VERSION = "0.2.2" unless defined?(::Goth::VERSION)
 end
 
