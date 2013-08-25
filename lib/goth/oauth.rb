@@ -8,7 +8,7 @@ module Goth
           access_token_path:  '/accounts/OAuthGetAccessToken',
           authorize_path:     '/accounts/OAuthAuthorizeToken',
           signature_method:   "HMAC-SHA1",
-          timeout:            180
+          timeout:            360
         })
       end
 
